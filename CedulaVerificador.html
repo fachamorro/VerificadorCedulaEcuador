@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Algoritmo verificador cédula Ecuador</h3>
+<input type="text" name="cadena" id="cadena" maxlength="10">
+<button type="button" id="btn" onclick="verificarClick()">Validar!</button>
+<input type="text" name="resultado" id="resultado" maxlength="10" readonly="">
+<p id="samplebtn"></p>
+
+<script>
+/*Desarrollado por Freddy Chamorro*/
+function verificarClick() {
+	cadena = document.getElementById("cadena").value;
+	if (cadena.length==10) {
+		suma=0;
+		posicion=0;
+		suma=digitoVerificador(cadena, posicion, suma);
+		if (suma%10==0) {
+			suma= 0;
+		} else if (suma>9){
+			suma= (10-(suma%10));
+		}
+		if (suma==cadena[9]) {
+			document.getElementById("resultado").value='cédula válida'
+		} else {
+			document.getElementById("resultado").value='cédula NO válida';
+		}
+	}
+	else{
+		document.getElementById("resultado").value='cédula NO válida'
+	}
+}
+
+function digitoVerificador(cadena, posicion, suma) {
+	var valor=0
+	if (posicion<=8) {
+		if (posicion % 2 ==0) {
+			valor=cadena[posicion]*2
+			if ( valor> 9) {
+				valor= valor-9;
+			} 
+			suma+=digitoVerificador(cadena, posicion+1,valor);
+		} else {
+			valor=cadena[posicion]*1;
+			suma+=digitoVerificador(cadena, posicion+1,valor);
+	}
+	} 
+return suma;
+}
+</script>
+</body>
+</html>
